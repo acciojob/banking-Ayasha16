@@ -42,21 +42,21 @@ public class BankAccount {
         }
     }
 
-    public void generatepassword(String ansstr, int digits, int sum){
+    public void generatepassword(String ans, int digits, int sum){
 
-        if(ansstr.length()>=digits){
+        if(ans.length()>=digits){
             int newsum=0;
-            for(int i=0;i<ansstr.length();i++) {
-                newsum += (int)(ansstr.charAt(i)-'0');
+            for(int i=0;i<ans.length();i++) {
+                newsum += (int)(ans.charAt(i)-'0');
             }
             if(newsum==sum){
-                this.AccountNumber=ansstr;
+                this.AccountNumber=ans;
             }
             return;
         }
 
         for(int i=0;i<10;i++){
-            generatepassword(ansstr+Integer.toString(i), digits, sum);
+            generatepassword(ans+Integer.toString(i), digits, sum);
         }
     }
 
