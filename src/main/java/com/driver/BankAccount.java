@@ -6,7 +6,9 @@ public class BankAccount {
     private double balance;
     private double minBalance;
 
-    private String AccountNumber;  // myvariable
+    public double getBalance() {
+        return balance;
+    }
 
     public BankAccount(String name, double balance, double minBalance) {
         this.name=name;
@@ -18,69 +20,37 @@ public class BankAccount {
         //Each digit of an account number can lie between 0 and 9 (both inclusive)
         //Generate account number having given number of 'digits' such that the sum of digits is equal to 'sum'
         //If it is not possible, throw "Account Number can not be generated" exception
-        AccountNumber="";
-
-        generatepassword("",digits,sum);
-        if(AccountNumber.length()==0){
+        int s=0;
+        while(digits !=0){
+            int digit=digits%10;
+            s+=digit;
+            digits=digits/10;
+        }
+        if(s!=sum){
             throw new Exception("Account Number can not be generated");
         }
-        return AccountNumber;
+
+        return String.valueOf(digits);
+
     }
 
     public void deposit(double amount) {
         //add amount to balance
-        balance+=amount;
+        this.balance+=amount;
+
     }
 
     public void withdraw(double amount) throws Exception {
         // Remember to throw "Insufficient Balance" exception, if the remaining amount would be less than minimum balance
-        if(amount<=balance){
-            balance-=amount;
-            if(balance<minBalance){
-                throw new Exception("Insufficient Balance");
-            }
-        }
-    }
+        double remaining=balance-amount;
 
-    public void generatepassword(String ans, int digits, int sum){
-
-        if(ans.length()>=digits){
-            int newsum=0;
-            for(int i=0;i<ans.length();i++) {
-                newsum += (int)(ans.charAt(i)-'0');
-            }
-            if(newsum==sum){
-                this.AccountNumber=ans;
-            }
-            return;
+        if((balance-amount)<minBalance){
+            throw new Exception("Insufficient Balance");
         }
 
-        for(int i=0;i<10;i++){
-            generatepassword(ans+Integer.toString(i), digits, sum);
-        }
+        balance=remaining;
+
+
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public double getBalance() {
-        return balance;
-    }
-
-    public void setBalance(double balance) {
-        this.balance = balance;
-    }
-
-    public double getMinBalance() {
-        return minBalance;
-    }
-
-    public void setMinBalance(double minBalance) {
-        this.minBalance = minBalance;
-    }
 }
